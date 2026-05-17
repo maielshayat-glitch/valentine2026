@@ -32,6 +32,12 @@
         
         input[type="password"] { width: 100%; padding: 14px 20px; border-radius: 25px; border: none; background: rgba(255,255,255,0.9); color: #333; text-align: center; font-size: 16px; margin-bottom: 15px; outline: none; }
         
+        /* تنسيق التلميحات الشخصية (Hints) تحت الباسوورد */
+        .hint-container { background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 12px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.03); text-align: right; font-size: 13px; line-height: 1.5; }
+        .hint-item { color: #ffafbd; margin-bottom: 5px; }
+        .hint-item:last-child { margin-bottom: 0; }
+        .hint-item b { color: #ff3e6c; }
+
         /* الأزرار الأساسية للموقع */
         .btn { width: 100%; padding: 14px; border-radius: 25px; border: none; background: #ff3e6c; color: white; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(255, 62, 108, 0.3); margin-top: 15px; }
         .btn:hover { background: #e02853; transform: scale(1.02); }
@@ -74,6 +80,12 @@
         <div class="heart-icon">💝</div>
         <h2>جاهز يا يوسف ياحبيبي ؟ 🥰</h2>
         <input type="password" id="passInput" placeholder="اكتب كلمة السر هنا...">
+        
+        <div class="hint-container">
+            <div class="hint-item">💡 <b>تلميح:</b> أكتر كلمة بلقها وأنا بكلمك دايماً وبحبها منك هي <b>OMG</b></div>
+            <div class="hint-item">📅 <b>تاريخ منساشي:</b> اليوم اللي قولتلي فيه بحبك كان <b>2026-3-24</b></div>
+        </div>
+
         <button onclick="unlockPage()">Unlock 🔓</button>
     </div>
 
