@@ -30,13 +30,11 @@
         h2 { font-size: 22px; margin-bottom: 20px; font-weight: 600; color: #ffafbd; }
         h3 { color: #ffafbd; margin-bottom: 10px; font-size: 18px; }
         
-        input[type="password"] { width: 100%; padding: 14px 20px; border-radius: 25px; border: none; background: rgba(255,255,255,0.9); color: #333; text-align: center; font-size: 16px; margin-bottom: 15px; outline: none; }
+        /* تنسيق خانات الإدخال والكتابة */
+        input[type="password"], input[type="text"] { width: 100%; padding: 14px 20px; border-radius: 25px; border: none; background: rgba(255,255,255,0.9); color: #333; text-align: center; font-size: 15px; margin-bottom: 15px; outline: none; transition: 0.3s; }
+        input[type="password"]:focus, input[type="text"]:focus { background: #ffffff; box-shadow: 0 0 10px rgba(255, 62, 108, 0.5); }
         
-        /* تنسيق التلميحات الشخصية (Hints) تحت الباسوورد */
-        .hint-container { background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 12px; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.03); text-align: right; font-size: 13px; line-height: 1.5; }
-        .hint-item { color: #ffafbd; margin-bottom: 5px; }
-        .hint-item:last-child { margin-bottom: 0; }
-        .hint-item b { color: #ff3e6c; }
+        label { display: block; text-align: right; font-size: 13px; color: #ffafbd; margin-bottom: 5px; padding-right: 10px; }
 
         /* الأزرار الأساسية للموقع */
         .btn { width: 100%; padding: 14px; border-radius: 25px; border: none; background: #ff3e6c; color: white; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(255, 62, 108, 0.3); margin-top: 15px; }
@@ -79,12 +77,15 @@
     <div class="card" id="lock-screen">
         <div class="heart-icon">💝</div>
         <h2>جاهز يا يوسف ياحبيبي ؟ 🥰</h2>
+        
+        <label for="passInput">🔑 كلمة السر الأساسية:</label>
         <input type="password" id="passInput" placeholder="اكتب كلمة السر هنا...">
         
-        <div class="hint-container">
-            <div class="hint-item">💡 <b>تلميح:</b> أكتر كلمة بلقها وأنا بكلمك دايماً وبحبها منك هي <b>OMG</b></div>
-            <div class="hint-item">📅 <b>تاريخ منساشي:</b> اليوم اللي قولتلي فيه بحبك كان <b>2026-3-24</b></div>
-        </div>
+        <label for="wordInput">💬 خمن.. أكتر كلمة بلقها وأنا بكلمك دايماً؟</label>
+        <input type="text" id="wordInput" placeholder="أنا مستني تخمينك... 👀">
+        
+        <label for="dateInput">📅 خمن.. التاريخ اللي قولتلي فيه بحبك؟</label>
+        <input type="text" id="dateInput" placeholder="مثال: 2026-3-24">
 
         <button onclick="unlockPage()">Unlock 🔓</button>
     </div>
@@ -161,8 +162,14 @@
         }
 
         function unlockPage() {
-            const password = document.getElementById("passInput").value;
-            if (password.toLowerCase() === "love") { 
+            const password = document.getElementById("passInput").value.trim().toLowerCase();
+            const wordAnswer = document.getElementById("wordInput").value.trim().toUpperCase(); // بيحول الحروف لكبيرة عشان لو كتب omg أو OMG يقبلها
+            const dateAnswer = document.getElementById("dateInput").value.trim();
+
+            // فحص الإجابات الثلاثة بدقة (لو كتب التاريخ بالفواصل العادية أو النقط أو الشرط يقبلها)
+            const cleanDate = dateAnswer.replace(/[\/.]/g, "-"); // بيحول أي نقط أو فواصل لشرطات تلقائياً عشان نسهل عليه
+
+            if (password === "love" && wordAnswer === "OMG" && (cleanDate === "24-3-2026" || cleanDate === "2026-3-24" || cleanDate === "24-03-2026")) { 
                 goToPage('page-one');
                 
                 // تشغيل الأغنية فور التفاعل مع شاشة القفل
@@ -174,7 +181,7 @@
                 startSlideshow();
                 setInterval(createHeart, 300);
             } else {
-                alert("كلمة السر مش صحيحة! 🤭");
+                alert("في حاجة غلط في التخمين أو الباسوورد! ركز كدا وافتكر تفاصيلنا يا جو 🤭❤️");
             }
         }
 
@@ -225,9 +232,9 @@
             let msg = "اممم، كدا بس؟ 🥺";
             
             if(val > 80) {
-                displayVal = Math.floor(val * 9999); // هيضرب النسبة في أرقام ضخمة جداً زي الصور
+                displayVal = Math.floor(val * 9999); 
                 msg = "أيوا كدااا! هيموت فيا خلاص حرامي القلوب  😂❤️❤️";
-                document.getElementById("next-btn").style.display = "block"; // إظهار زرار التالي
+                document.getElementById("next-btn").style.display = "block"; 
             } else if(val > 40) {
                 displayVal = Math.floor(val * 50);
                 msg = " its not the endبيزيد أهو، كمل كمل! 🥰";
