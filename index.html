@@ -1,64 +1,167 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Our Memory</title>
+    <title>To Someone I Love 💝</title>
     <style>
-        body { background-color: #7b1113; color: white; font-family: Arial, sans-serif; text-align: center; overflow: hidden; }
-        #login-screen, #main-content { position: absolute; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        #main-content { display: none; background: radial-gradient(circle, #b01e23, #7b1113); }
-        .heart { color: #ff4d4d; font-size: 50px; margin-bottom: 20px; animation: pulse 1s infinite; }
-        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
-        input { padding: 10px; border-radius: 20px; border: none; text-align: center; margin-bottom: 10px; }
-        button { padding: 10px 20px; border-radius: 20px; border: none; background: #ff4d4d; color: white; cursor: pointer; }
-        .counter { font-size: 20px; margin-top: 20px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 15px; }
+        /* نفس ألوانك العنابي الغامق من ملف الـ Config */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { 
+            background: linear-gradient(135deg, #72091e, #3f000c); 
+            color: #ffffff; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            overflow-x: hidden; 
+            text-align: center; 
+        }
+        
+        /* شاشة القفل الدائرية الأنيقة */
+        .card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); padding: 35px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); width: 90%; max-width: 380px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); z-index: 10; transition: all 0.5s ease; }
+        .heart-icon { font-size: 60px; color: #ff3e6c; animation: beat 1.2s infinite; margin-bottom: 15px; }
+        @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        h2 { font-size: 22px; margin-bottom: 20px; font-weight: 600; color: #ffafbd; }
+        
+        input[type="password"] { width: 100%; padding: 14px 20px; border-radius: 25px; border: none; background: rgba(255,255,255,0.9); color: #333; text-align: center; font-size: 16px; margin-bottom: 15px; outline: none; }
+        button { width: 100%; padding: 14px; border-radius: 25px; border: none; background: #ff3e6c; color: white; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(255, 62, 108, 0.3); }
+        button:hover { background: #e02853; }
+
+        /* المحتوى الرئيسي (الصور والعداد) */
+        #main-content { display: none; flex-direction: column; align-items: center; width: 100%; max-width: 400px; padding: 20px; animation: fadeIn 1.2s ease-in-out; z-index: 5; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* معرض الصور المتنقل مثل الفيديو */
+        .slider { width: 100%; height: 250px; border-radius: 25px; overflow: hidden; margin-bottom: 20px; position: relative; border: 4px solid rgba(255,255,255,0.05); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        .slider img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 1s ease-in-out; }
+        .slider img.active { opacity: 1; }
+
+        /* العداد التنازلي الأنيق */
+        .counter-container { background: rgba(0, 0, 0, 0.25); border-radius: 25px; padding: 20px; width: 100%; margin-top: 15px; border: 1px solid rgba(255,255,255,0.05); }
+        .counter-title { font-size: 16px; margin-bottom: 15px; color: #ffafbd; font-weight: bold; }
+        .grid-timer { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .time-box { background: rgba(255,255,255,0.08); padding: 12px 5px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.03); }
+        .time-num { font-size: 22px; font-weight: bold; display: block; color: #fff; }
+        .time-label { font-size: 11px; color: #ffafbd; }
+
+        /* الرسائل الإضافية المحتوية على اعتذارك وكلامك ليوسف */
+        .message-box { background: rgba(255,255,255,0.05); border-radius: 20px; padding: 15px; margin-top: 15px; width: 100%; font-size: 15px; line-height: 1.6; border-right: 4px solid #ff3e6c; text-align: right; }
+
+        /* القلوب المتساقطة البراقة */
+        .falling-heart { position: fixed; top: -10%; font-size: 20px; color: rgba(255, 62, 108, 0.6); user-select: none; pointer-events: none; animation: fall linear infinite; z-index: 1; }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
     </style>
 </head>
 <body>
 
-    <div id="login-screen">
-        <div class="heart">❤️</div>
-        <h3>جاهزة؟</h3>
-        <input type="password" id="password" placeholder="كلمة السر">
-        <button onclick="checkPass()">Unlock 🔓</button>
+    <div class="card" id="lock-screen">
+        <div class="heart-icon">💝</div>
+        <h2>جاهز يا يوسف؟ 🥰</h2>
+        <input type="password" id="passInput" placeholder="اكتب كلمة السر هنا...">
+        <button onclick="unlockPage()">Unlock 🔓</button>
     </div>
 
     <div id="main-content">
-        <div class="heart">💖</div>
-        <h2 id="days-count">بقالنا مع بعض...</h2>
-        <div class="counter" id="timer"></div>
-        <p>كل ثانية بتعدي وإنت في قلبي</p>
-        <audio id="love-song" loop>
-            <source src="أغنيتك_هنا.mp3" type="audio/mpeg">
+        
+        <div class="slider">
+            <img src="img1.jpg" class="active" alt="ذكرى 1">
+            <img src="img2.jpg" alt="ذكرى 2">
+        </div>
+
+        <h3 style="color: #ffafbd; margin-bottom: 5px;">بدايتنا وسوا مع بعض 💖</h3>
+
+        <div class="counter-container">
+            <div class="counter-title">بقالنا سوا:</div>
+            <div class="grid-timer">
+                <div class="time-box"><span class="time-num" id="days">00</span><span class="time-label">يوم</span></div>
+                <div class="time-box"><span class="time-num" id="hours">00</span><span class="time-label">ساعة</span></div>
+                <div class="time-box"><span class="time-num" id="minutes">00</span><span class="time-label">دقيقة</span></div>
+                <div class="time-box"><span class="time-num" id="seconds">00</span><span class="time-label">ثانية</span></div>
+            </div>
+        </div>
+
+        <div class="message-box">
+            👉 <b>can you forgive me?</b><br>
+            sorry, I love you more I didn't mean to! 💝💖
+        </div>
+        
+        <div class="message-box">
+            👉 <b>To Yossef:</b><br>
+            you are the best person in my life, i feel safe with you! 🤗💋❤️
+        </div>
+
+        <audio id="bgMusic" loop>
+            <source src="https://res.cloudinary.com/dncywqfpb/video/upload/v1738399057/music_qrhjvy.mp3" type="audio/mpeg">
         </audio>
     </div>
 
     <script>
-        function checkPass() {
-            const pass = document.getElementById('password').value;
-            if(pass === "love") { // كلمة السر هنا
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('main-content').style.display = 'flex';
-                document.getElementById('love-song').play();
-                startTimer();
+        function unlockPage() {
+            const password = document.getElementById("passInput").value;
+            // كلمة السر هنا هي love (تقدري تغيريها لأي كلمة تانية)
+            if (password.toLowerCase() === "love") { 
+                document.getElementById("lock-screen").style.display = "none";
+                document.getElementById("main-content").style.display = "flex";
+                
+                // تشغيل الأغنية الرومانسية تلقائياً
+                const audio = document.getElementById("bgMusic");
+                audio.play().catch(e => console.log("Autoplay blocked, click allowed."));
+
+                startCounter();
+                startSlideshow();
+                setInterval(createHeart, 300); // بدء تأثير تساقط القلوب
             } else {
-                alert("كلمة السر غلط يا روحي!");
+                alert("كلمة السر مش صحيحة! 🤭");
             }
         }
 
-        function startTimer() {
-            const startDate = new Date("2025-10-03"); // حطي تاريخ بدايتكم هنا
-            setInterval(() => {
+        // عداد الوقت يحسب بدقة بالثواني (تقدري تغيري التاريخ من السطر اللي تحت ده)
+        function startCounter() {
+            const startDate = new Date("2025-10-03T00:00:00"); 
+            
+            function update() {
                 const now = new Date();
                 const diff = now - startDate;
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-                const mins = Math.floor((diff / 1000 / 60) % 60);
-                const secs = Math.floor((diff / 1000) % 60);
-                document.getElementById('timer').innerHTML = 
-                    `${days} يوم و ${hours} ساعة و ${mins} دقيقة و ${secs} ثانية`;
-            }, 1000);
+
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const m = Math.floor((diff / 1000 / 60) % 60);
+                const s = Math.floor((diff / 1000) % 60);
+
+                document.getElementById("days").innerText = d;
+                document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
+                document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
+                document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
+            }
+            update();
+            setInterval(update, 1000);
+        }
+
+        // حركة انتقال الصور التلقائية
+        function startSlideshow() {
+            const images = document.querySelectorAll(".slider img");
+            let currentIndex = 0;
+            if(images.length > 1) {
+                setInterval(() => {
+                    images[currentIndex].classList.remove("active");
+                    currentIndex = (currentIndex + 1) % images.length;
+                    images[currentIndex].classList.add("active");
+                }, 3000); // تتغير الصورة كل 3 ثواني
+            }
+        }
+
+        // تساقط القلوب الفوشيا والأحمر في الخلفية
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("falling-heart");
+            const emojis = ['❤️', '💖', '💝', '💗'];
+            heart.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 3 + 3 + "s";
+            heart.style.fontSize = Math.random() * 15 + 15 + "px";
+            document.body.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 6000);
         }
     </script>
 </body>
