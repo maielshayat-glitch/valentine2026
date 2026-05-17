@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To Someone I Love 💝</title>
     <style>
-        /* نفس ألوانك العنابي الغامق من ملف الـ Config */
+        /* الألوان العنابية المعتمدة للموقع */
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { 
             background: linear-gradient(135deg, #72091e, #3f000c); 
@@ -18,21 +18,31 @@
             text-align: center; 
         }
         
-        /* شاشة القفل الدائرية الأنيقة */
-        .card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); padding: 35px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); width: 90%; max-width: 380px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); z-index: 10; transition: all 0.5s ease; }
+        /* تصميم الكروت الشفافة */
+        .card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); padding: 35px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.1); width: 90%; max-width: 380px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); z-index: 10; display: none; animation: fadeIn 0.8s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* إظهار شاشة القفل كأول شاشة */
+        #lock-screen { display: block; }
+
         .heart-icon { font-size: 60px; color: #ff3e6c; animation: beat 1.2s infinite; margin-bottom: 15px; }
         @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
         h2 { font-size: 22px; margin-bottom: 20px; font-weight: 600; color: #ffafbd; }
+        h3 { color: #ffafbd; margin-bottom: 10px; font-size: 18px; }
         
         input[type="password"] { width: 100%; padding: 14px 20px; border-radius: 25px; border: none; background: rgba(255,255,255,0.9); color: #333; text-align: center; font-size: 16px; margin-bottom: 15px; outline: none; }
-        button { width: 100%; padding: 14px; border-radius: 25px; border: none; background: #ff3e6c; color: white; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(255, 62, 108, 0.3); }
-        button:hover { background: #e02853; }
+        
+        /* الأزرار الأساسية للموقع */
+        .btn { width: 100%; padding: 14px; border-radius: 25px; border: none; background: #ff3e6c; color: white; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(255, 62, 108, 0.3); margin-top: 15px; }
+        .btn:hover { background: #e02853; transform: scale(1.02); }
+        
+        /* أزرار نعم ولا التفاعلية لصفحة الأسئلة */
+        .btn-group { display: flex; gap: 10px; justify-content: center; margin-top: 20px; position: relative; min-height: 60px; }
+        .btn-inline { padding: 12px 30px; border-radius: 25px; border: none; font-weight: bold; cursor: pointer; font-size: 16px; transition: 0.2s; }
+        .btn-yes { background: #ff3e6c; color: white; }
+        .btn-no { background: #555; color: white; position: relative; }
 
-        /* المحتوى الرئيسي (الصور والعداد) */
-        #main-content { display: none; flex-direction: column; align-items: center; width: 100%; max-width: 400px; padding: 20px; animation: fadeIn 1.2s ease-in-out; z-index: 5; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* معرض الصور المتنقل مثل الفيديو */
+        /* معرض صور الواتساب */
         .slider { width: 100%; height: 250px; border-radius: 25px; overflow: hidden; margin-bottom: 20px; position: relative; border: 4px solid rgba(255,255,255,0.05); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
         .slider img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 1s ease-in-out; }
         .slider img.active { opacity: 1; }
@@ -45,8 +55,13 @@
         .time-num { font-size: 22px; font-weight: bold; display: block; color: #fff; }
         .time-label { font-size: 11px; color: #ffafbd; }
 
-        /* الرسائل الإضافية المحتوية على اعتذارك وكلامك ليوسف */
         .message-box { background: rgba(255,255,255,0.05); border-radius: 20px; padding: 15px; margin-top: 15px; width: 100%; font-size: 15px; line-height: 1.6; border-right: 4px solid #ff3e6c; text-align: right; }
+
+        /* التحكم في مقياس السلايدر الخاص بالحب */
+        .slider-container { margin: 25px 0; }
+        .love-slider { -webkit-appearance: none; width: 100%; height: 15px; border-radius: 10px; background: rgba(255,255,255,0.1); outline: none; }
+        .love-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 25px; height: 25px; border-radius: 50%; background: #ff3e6c; cursor: pointer; box-shadow: 0 0 10px #ff3e6c; }
+        .val-display { font-size: 28px; font-weight: bold; color: #ff3e6c; margin: 10px 0; }
 
         /* القلوب المتساقطة البراقة */
         .falling-heart { position: fixed; top: -10%; font-size: 20px; color: rgba(255, 62, 108, 0.6); user-select: none; pointer-events: none; animation: fall linear infinite; z-index: 1; }
@@ -62,12 +77,10 @@
         <button onclick="unlockPage()">Unlock 🔓</button>
     </div>
 
-    <div id="main-content">
-        
+    <div class="card" id="page-one">
         <div class="slider">
             <img src="WhatsApp Image 2026-05-17 at 1.45.01 PM.jpeg" class="active" alt="my gentle man who i love">
-            <img src="WhatsApp Image 2026-05-17 at 1.42.14 PM.jpeg" alt="OMG Very Strong man  ">
-        
+            <img src="WhatsApp Image 2026-05-17 at 1.42.14 PM.jpeg" alt="OMG Very Strong man">
         </div>
 
         <h3 style="color: #ffafbd; margin-bottom: 5px;">بدايتنا وسوا مع بعض 💖</h3>
@@ -91,54 +104,87 @@
             👉 <b>To Yossef:</b><br>
             you are the best person in my life, i feel safe with you! 🤗💋❤️
         </div>
-<audio id="bgMusic" loop preload="auto">
-    <source src="WhatsApp Audio 2026-05-17 at 1.53.30 PM.mp3" type="audio/mpeg">
-</audio>
+
+        <button class="btn" onclick="goToPage('page-two')">اضغط هنا لمفاجأة ثانية 🎁</button>
     </div>
 
+    <div class="card" id="page-two">
+        <div class="heart-icon">🥺</div>
+        <h2>Do you still love me? ❤️</h2>
+        <div class="btn-group">
+            <button class="btn-inline btn-yes" onclick="goToPage('page-three')">Yes</button>
+            <button class="btn-inline btn-no" id="nobtn" onmouseover="moveNoButton()" onclick="moveNoButton()">No</button>
+        </div>
+    </div>
+
+    <div class="card" id="page-three">
+        <div class="heart-icon">📈</div>
+        <h2>How much do you love me?</h2>
+        <div class="slider-container">
+            <input type="range" min="0" max="100" value="10" class="love-slider" id="loveRange" oninput="updateLoveMeter(this.value)">
+            <div class="val-display" id="loveValue">10%</div>
+            <p id="loveMsg" style="color: #ffafbd; font-size: 15px; height: 25px; margin-top: 5px;"></p>
+        </div>
+        <button class="btn" id="next-btn" style="display:none;" onclick="goToPage('page-four')">اضغط للمفاجأة الأخيرة دقيقة بقا 🫣❤️</button>
+    </div>
+
+    <div class="card" id="page-four">
+        <div class="heart-icon">🎉</div>
+        <h2 style="color: #ff3e6c;">I knew it! 🥰</h2>
+        <div class="message-box" style="text-align: center; font-size: 16px; border-right: none; border-left: 4px solid #ff3e6c;">
+            أنا كمان بحبك جداً ومقدرش أستغنى عنك يا أغلى حاجة في حياتي! ربنا يخليك ليا دايماً يا يوسف يا حبيبي ونفضل سوا العمر كله. 💋❤️💍
+        </div>
+        <div class="heart-icon" style="font-size: 45px; margin-top: 20px;">❤️✨🌸</div>
+    </div>
+
+    <audio id="bgMusic" loop preload="auto">
+        <source src="WhatsApp Audio 2026-05-17 at 1.53.30 PM.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
+        // دالة التنقل السلس بين الصفحات والكروت
+        function goToPage(pageId) {
+            document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
+            document.getElementById(pageId).style.display = 'block';
+        }
+
         function unlockPage() {
             const password = document.getElementById("passInput").value;
-            // كلمة السر هنا هي love (تقدري تغيريها لأي كلمة تانية)
             if (password.toLowerCase() === "love") { 
-                document.getElementById("lock-screen").style.display = "none";
-                document.getElementById("main-content").style.display = "flex";
+                goToPage('page-one');
                 
-                // تشغيل الأغنية الرومانسية تلقائياً
-              const audio = document.getElementById("bgMusic");
-audio.muted = false; // للتأكد أن الصوت ليس مكتوماً
-audio.play().catch(e => console.log("جاري التشغيل بعد التفاعل: ", e));
+                // تشغيل الأغنية فور التفاعل مع شاشة القفل
+                const audio = document.getElementById("bgMusic");
+                audio.muted = false;
+                audio.play().catch(e => console.log("جاري التشغيل بعد التفاعل: ", e));
+                
                 startCounter();
                 startSlideshow();
-                setInterval(createHeart, 300); // بدء تأثير تساقط القلوب
+                setInterval(createHeart, 300);
             } else {
                 alert("كلمة السر مش صحيحة! 🤭");
             }
         }
 
-        // عداد الوقت يحسب بدقة بالثواني (تقدري تغيري التاريخ من السطر اللي تحت ده)
+        // عداد الوقت يحسب من يوم بدايتكم
         function startCounter() {
             const startDate = new Date("2025-10-03T00:00:00"); 
-            
             function update() {
                 const now = new Date();
                 const diff = now - startDate;
-
                 const d = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
                 const m = Math.floor((diff / 1000 / 60) % 60);
                 const s = Math.floor((diff / 1000) % 60);
-
                 document.getElementById("days").innerText = d;
                 document.getElementById("hours").innerText = h < 10 ? "0" + h : h;
                 document.getElementById("minutes").innerText = m < 10 ? "0" + m : m;
                 document.getElementById("seconds").innerText = s < 10 ? "0" + s : s;
             }
-            update();
-            setInterval(update, 1000);
+            update(); setInterval(update, 1000);
         }
 
-        // حركة انتقال الصور التلقائية
+        // سلايدر الصور التلقائي
         function startSlideshow() {
             const images = document.querySelectorAll(".slider img");
             let currentIndex = 0;
@@ -147,11 +193,39 @@ audio.play().catch(e => console.log("جاري التشغيل بعد التفاع
                     images[currentIndex].classList.remove("active");
                     currentIndex = (currentIndex + 1) % images.length;
                     images[currentIndex].classList.add("active");
-                }, 3000); // تتغير الصورة كل 3 ثواني
+                }, 3000);
             }
         }
 
-        // تساقط القلوب الفوشيا والأحمر في الخلفية
+        // 🏃‍♂️ ذكاء هروب زرار "No" عشان مستحيل يضغط عليه
+        function moveNoButton() {
+            const noBtn = document.getElementById("nobtn");
+            const x = Math.random() * (window.innerWidth - 120) - (window.innerWidth / 2 - 60);
+            const y = Math.random() * (window.innerHeight - 120) - (window.innerHeight / 2 - 60);
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        }
+
+        // 📈 مقياس الحب السلايدر والأرقام الفلكية
+        function updateLoveMeter(val) {
+            let displayVal = val;
+            let msg = "اممم، كدا بس؟ 🥺";
+            
+            if(val > 80) {
+                displayVal = Math.floor(val * 9999); // هيضرب النسبة في أرقام ضخمة جداً زي الصور
+                msg = "أيوا كدااا! هيموت فيا خلاص 😂❤️❤️";
+                document.getElementById("next-btn").style.display = "block"; // إظهار زرار التالي
+            } else if(val > 40) {
+                displayVal = Math.floor(val * 50);
+                msg = "بيزيد أهو، كمل كمل! 🥰";
+            }
+            
+            document.getElementById("loveValue").innerText = displayVal + "%";
+            document.getElementById("loveMsg").innerText = msg;
+        }
+
+        // تساقط القلوب
         function createHeart() {
             const heart = document.createElement("div");
             heart.classList.add("falling-heart");
