@@ -67,7 +67,7 @@
         <div class="slider">
             <img src="WhatsApp Image 2026-05-17 at 1.45.01 PM.jpeg" class="active" alt="my gentle man who i love">
             <img src="WhatsApp Image 2026-05-17 at 1.42.14 PM.jpeg" alt="OMG Very Strong man  ">
-             <img src="WhatsApp Image 2026-05-17 at 1.44.48 PM.jpeg" alt="habiby  ">
+        
         </div>
 
         <h3 style="color: #ffafbd; margin-bottom: 5px;">بدايتنا وسوا مع بعض 💖</h3>
@@ -91,10 +91,9 @@
             👉 <b>To Yossef:</b><br>
             you are the best person in my life, i feel safe with you! 🤗💋❤️
         </div>
-
-        <audio id="bgMusic" loop>
-            <source src="WhatsApp Audio 2026-05-17 at 1.53.30 PM.mp3" type="audio/mpeg">
-        </audio>
+<audio id="bgMusic" loop preload="auto">
+    <source src="WhatsApp Audio 2026-05-17 at 1.53.30 PM.mp3" type="audio/mpeg">
+</audio>
     </div>
 
     <script>
@@ -106,9 +105,9 @@
                 document.getElementById("main-content").style.display = "flex";
                 
                 // تشغيل الأغنية الرومانسية تلقائياً
-                const audio = document.getElementById("bgMusic");
-                audio.play().catch(e => console.log("Autoplay blocked, click allowed."));
-
+              const audio = document.getElementById("bgMusic");
+audio.muted = false; // للتأكد أن الصوت ليس مكتوماً
+audio.play().catch(e => console.log("جاري التشغيل بعد التفاعل: ", e));
                 startCounter();
                 startSlideshow();
                 setInterval(createHeart, 300); // بدء تأثير تساقط القلوب
