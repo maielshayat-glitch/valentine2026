@@ -3,183 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> كداااااااب</title>
+<title>Game Over</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
 body{
-    background:#0f0f0f;
-    color:white;
-    font-family:Tahoma,sans-serif;
-    min-height:100vh;
+    margin:0;
+    height:100vh;
     display:flex;
     justify-content:center;
     align-items:center;
-    text-align:center;
-    overflow:hidden;
+    background:#000;
+    font-family:Tahoma, sans-serif;
 }
 
-.container{
-    width:90%;
-    max-width:700px;
+.box{
+    border:2px solid #ff0000;
+    padding:40px 60px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 0 20px rgba(255,0,0,0.5);
 }
 
 h1{
-    color:#ff5c5c;
-    margin-bottom:30px;
-    font-size:40px;
-}
-
-.card{
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.1);
-    padding:30px;
-    border-radius:20px;
-    min-height:180px;
-    backdrop-filter:blur(8px);
-}
-
-#text{
-    line-height:2;
-    font-size:22px;
-}
-
-button{
-    margin-top:25px;
-    padding:12px 25px;
-    border:none;
-    border-radius:12px;
-    background:#ff5c5c;
-    color:white;
-    font-size:18px;
-    cursor:pointer;
-}
-
-button:hover{
-    transform:scale(1.05);
-}
-
-.floating{
-    position:absolute;
-    color:#ff4d4d;
-    opacity:.2;
-    animation:float 8s linear infinite;
-}
-
-@keyframes float{
-    from{
-        transform:translateY(100vh);
-    }
-    to{
-        transform:translateY(-100px);
-    }
+    color:#ff0000;
+    font-size:48px;
+    margin:0;
+    letter-spacing:3px;
 }
 </style>
+
 </head>
 
 <body>
 
-<div class="container">
-
-<h1> كدب</h1>
-
-<div class="card">
-<div id="text">
-ازاي وليه .
+<div class="box">
+    <h1>GAME OVER</h1>
 </div>
-</div>
-
-<button onclick="nextMsg()">
-next
-</button>
-
-</div>
-
-<script>
-
-const messages = [
-
-"في البداية كنت فاكرة إن كل كلمة بتتقال من القلب.",
-
-"وكل تعبير علي الوش  صادق.",
-
-"ازاي قدرت تعملها .",
-
-"ازاي قدرت تمثل ",
-
-"طلعت محترف كدب وتمثيل احيك",
-
-"اذيتك في اي عشان تضحك عليا ",
-
-"دنا حكيتلك علي اللي نصب عليا تقوم تنصب عليا وتكدب في حاجه اغلي من الفلوس ",
-
-"عاوزه اعرف ازاااي وليه ",
-
-"   اتقي الله وبطل تأذي الناس حتي البنت اللي خاطبها زنبها اي ",
-
-"ادتني اكبر درس متفاجأه ازاي اتقنت الكدب علي وشك ",
-
-"الحمدلله انا كنت اضافه لاي حد وانت متستاهلهاش ",
-
-"تعرف المقارنه اللي كنت حطاك فيها انت منظلمتش اللي انظلم ابن خالتي ازاي اصلا احطه في مقارنه معاك  ✨",
-
-" take care ya abbooo sufyan",
-
-];
-
-let index = 0;
-
-function nextMsg(){
-
-if(index < messages.length){
-document.getElementById("text").innerHTML =
-messages[index];
-index++;
-}
-}
-
-function createWord(){
-
-const words = [
-"ذكرى",
-"تعبير ",
-"ثقة",
-"حقيقة",
-"درس",
-"انتهى", 
-"استغلال",
-"كدب "
-];
-
-const span = document.createElement("span");
-
-span.classList.add("floating");
-
-span.innerText =
-words[Math.floor(Math.random()*words.length)];
-
-span.style.left =
-Math.random()*100 + "vw";
-
-span.style.fontSize =
-(Math.random()*20+15) + "px";
-
-document.body.appendChild(span);
-
-setTimeout(()=>{
-span.remove();
-},8000);
-
-}
-
-setInterval(createWord,800);
-
-</script>
 
 </body>
 </html>
