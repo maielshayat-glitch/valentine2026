@@ -4,211 +4,177 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>الحقيقة ظهرت</title>
+<title>آخر نسخة من الحكاية</title>
 
 <style>
-body{
+*{
     margin:0;
-    background:linear-gradient(135deg,#111,#222,#000);
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#0f0f0f;
     color:white;
     font-family:Tahoma,sans-serif;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
     text-align:center;
     overflow:hidden;
 }
 
 .container{
-    padding:40px 20px;
-    position:relative;
-    z-index:2;
+    width:90%;
+    max-width:700px;
 }
 
 h1{
-    font-size:3rem;
-    color:#ff4d4d;
+    color:#ff5c5c;
+    margin-bottom:30px;
+    font-size:40px;
 }
 
-.message{
-    max-width:700px;
-    margin:auto;
+.card{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    padding:30px;
+    border-radius:20px;
+    min-height:180px;
+    backdrop-filter:blur(8px);
+}
+
+#text{
     line-height:2;
-    font-size:1.2rem;
-}
-
-.box{
-    margin-top:30px;
-    background:rgba(255,255,255,.08);
-    padding:20px;
-    border-radius:15px;
-}
-
-input[type=range]{
-    width:80%;
-}
-
-#trustValue{
-    font-size:2rem;
-    color:#ff6666;
+    font-size:22px;
 }
 
 button{
-    margin-top:20px;
+    margin-top:25px;
     padding:12px 25px;
     border:none;
-    border-radius:10px;
-    background:#ff4d4d;
+    border-radius:12px;
+    background:#ff5c5c;
     color:white;
     font-size:18px;
     cursor:pointer;
 }
 
 button:hover{
-    background:#d93636;
+    transform:scale(1.05);
 }
 
-.falling-word{
-    position:fixed;
-    top:-20px;
-    color:#ff5c5c;
-    font-weight:bold;
-    animation:fall linear forwards;
+.floating{
+    position:absolute;
+    color:#ff4d4d;
+    opacity:.2;
+    animation:float 8s linear infinite;
 }
 
-@keyframes fall{
+@keyframes float{
     from{
-        transform:translateY(0);
-        opacity:1;
+        transform:translateY(100vh);
     }
     to{
-        transform:translateY(100vh);
-        opacity:0;
+        transform:translateY(-100px);
     }
-}
-
-#finalMessage{
-    margin-top:30px;
-    font-size:1.2rem;
-    line-height:2;
 }
 </style>
 </head>
+
 <body>
 
 <div class="container">
 
-<h1>الحقيقة ظهرت</h1>
+<h1>آخر نسخة من الحكاية</h1>
 
-<div class="message">
-كنت أظن أن الصدق أساس كل شيء،
-لكن بعض الحقائق لا تظهر إلا بعد وقت طويل.
-<br><br>
-هذه الصفحة ليست للانتقام،
-بل لتوثيق لحظة فهمت فيها أن الحقيقة كانت مختلفة عما قيل لي.
+<div class="card">
+<div id="text">
+اضغط وخلينا نفتكر الحكاية من أولها...
+</div>
 </div>
 
-<div class="box">
-<h2>مستوى الثقة</h2>
-
-<input type="range"
-min="0"
-max="100"
-value="100"
-oninput="updateTrust(this.value)">
-
-<h3 id="trustValue">100%</h3>
-
-<p id="trustMsg">
-كنت أصدق كل شيء.
-</p>
-</div>
-
-<button onclick="showFinalMessage()">
-الرسالة الأخيرة
+<button onclick="nextMsg()">
+التالي
 </button>
-
-<div id="finalMessage"></div>
 
 </div>
 
 <script>
 
-function updateTrust(val){
+const messages = [
 
-let msg="";
+"في البداية كنت فاكرة إن كل كلمة بتتقال من القلب.",
 
-if(val>70){
-msg="كنت أظن أن كل شيء حقيقي.";
+"وكل وعد بيتقال هييجي اليوم اللي يتحقق فيه.",
+
+"وكل مرة كان يظهر تناقض... كنت بلاقي عذر.",
+
+"وكل مرة كنت أشك... كنت أقول أكيد أنا اللي فاهمة غلط.",
+
+"بس الحقيقة عمرها ما بتستخبى للأبد.",
+
+"في يوم اكتشفت إن الصورة اللي في دماغي كانت غير الواقع.",
+
+"واكتشفت إن الثقة لما تتكسر... صعب ترجع زي الأول.",
+
+"مش كل خسارة وحشة.",
+
+"أحيانًا أكبر مكسب إنك تعرف حقيقة شخص كنت فاكره مختلف.",
+
+"وده كان آخر درس في الحكاية.",
+
+"النهاية؟",
+
+"إني بقيت أعرف قيمتي أكتر من إني أصدق أي كلام وخلاص ✨"
+
+];
+
+let index = 0;
+
+function nextMsg(){
+
+if(index < messages.length){
+document.getElementById("text").innerHTML =
+messages[index];
+index++;
 }
-else if(val>40){
-msg="بدأت ألاحظ التناقضات.";
-}
-else if(val>10){
-msg="الأعذار أصبحت أكثر من الحقائق.";
-}
-else{
-msg="لم يتبق أي ثقة.";
-}
-
-document.getElementById("trustValue").innerText=val+"%";
-document.getElementById("trustMsg").innerText=msg;
-}
-
-function showFinalMessage(){
-
-document.getElementById("finalMessage").innerHTML=`
-<h2>رسالة أخيرة</h2>
-
-<p>
-ليس كل ما يُقال يكون حقيقيًا،
-وليس كل من يعد يفي بوعده.
-</p>
-
-<p>
-بعض الأشخاص يرحلون،
-لكن الدرس الذي يتركونه يبقى.
-</p>
-
-<p>
-أتمنى لك طريقك الذي اخترته،
-وأختار أنا أن أكمل طريقي بعيدًا.
-</p>
-`;
 }
 
 function createWord(){
 
-const words=[
-"كذب",
-"وعود",
-"أعذار",
+const words = [
+"ذكرى",
+"وعد",
+"ثقة",
 "حقيقة",
-"انتهى",
-"ثقة"
+"درس",
+"انتهى"
 ];
 
-const item=document.createElement("div");
+const span = document.createElement("span");
 
-item.classList.add("falling-word");
+span.classList.add("floating");
 
-item.innerHTML=
+span.innerText =
 words[Math.floor(Math.random()*words.length)];
 
-item.style.left=
-Math.random()*100+"vw";
+span.style.left =
+Math.random()*100 + "vw";
 
-item.style.fontSize=
-(Math.random()*15+15)+"px";
+span.style.fontSize =
+(Math.random()*20+15) + "px";
 
-item.style.animationDuration=
-(Math.random()*3+3)+"s";
-
-document.body.appendChild(item);
+document.body.appendChild(span);
 
 setTimeout(()=>{
-item.remove();
-},6000);
+span.remove();
+},8000);
+
 }
 
-setInterval(createWord,400);
+setInterval(createWord,800);
 
 </script>
 
